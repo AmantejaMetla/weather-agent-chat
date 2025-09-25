@@ -49,7 +49,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onClearC
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div
         ref={modalRef}
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6 focus:outline-none"
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6 focus:outline-none max-h-[80vh] overflow-y-auto"
         tabIndex={-1}
       >
         {/* Header */}

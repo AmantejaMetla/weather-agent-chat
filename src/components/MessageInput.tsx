@@ -2,6 +2,8 @@
 
 import React, { useState, useRef } from 'react';
 import { IoSend, IoHappyOutline, IoAttachOutline } from 'react-icons/io5';
+import EmojiPicker from './EmojiPicker';
+import FileUpload from './FileUpload';
 
 export interface MessageInputProps {
   onSendMessage: (message: string) => void;
@@ -21,6 +23,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
   isLoading = false
 }) => {
   const [message, setMessage] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showFileUpload, setShowFileUpload] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,6 +36,22 @@ const MessageInput: React.FC<MessageInputProps> = ({
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
       }
+    }
+  };
+
+  const handleEmojiSelect = (emoji: string) => {
+    setMessage(prev => prev + emoji);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  };
+
+  const handleFileSelect = (file: File) => {
+    // For now, just add the filename to the message
+    // In a real app, you'd upload the file and get a URL
+    setMessage(prev => prev + `📎 ${file.name}`);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
     }
   };
 
@@ -62,26 +82,26 @@ const MessageInput: React.FC<MessageInputProps> = ({
       <form onSubmit={handleSubmit} className="flex items-end gap-2 sm:gap-3">
         {/* Left side buttons */}
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onEmojiClick}
-            disabled={disabled || isLoading}
-            className={classNames(
-              'p-2 sm:p-2.5 rounded-full transition-all duration-200',
-              'transform hover:scale-110 active:scale-95',
-              (disabled || isLoading)
-                ? 'text-gray-400 cursor-not-allowed' 
-                : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'
-            )}
-            aria-label="Add emoji"
-            title="Add emoji"
-          >
-            <IoHappyOutline className="w-5 h-5" />
-          </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowEmojiPicker(true)}
+                        disabled={disabled || isLoading}
+                        className={classNames(
+                          'p-2 sm:p-2.5 rounded-full transition-all duration-200',
+                          'transform hover:scale-110 active:scale-95',
+                          (disabled || isLoading)
+                            ? 'text-gray-400 cursor-not-allowed'
+                            : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'
+                        )}
+                        aria-label="Add emoji"
+                        title="Add emoji"
+                      >
+                        <IoHappyOutline className="w-5 h-5" />
+                      </button>
           
           <button
             type="button"
-            onClick={onAttachmentClick}
+            onClick={() => setShowFileUpload(true)}
             disabled={disabled || isLoading}
             className={classNames(
               'p-2 sm:p-2.5 rounded-full transition-all duration-200',
@@ -153,6 +173,20 @@ const MessageInput: React.FC<MessageInputProps> = ({
           )}
         </button>
       </form>
+
+      {/* Emoji Picker Modal */}
+      <EmojiPicker
+        isOpen={showEmojiPicker}
+        onClose={() => setShowEmojiPicker(false)}
+        onEmojiSelect={handleEmojiSelect}
+      />
+
+      {/* File Upload Modal */}
+      <FileUpload
+        isOpen={showFileUpload}
+        onClose={() => setShowFileUpload(false)}
+        onFileSelect={handleFileSelect}
+      />
     </div>
   );
 };
