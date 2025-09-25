@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const anime = require('animejs');
+import React from 'react';
 
 export interface ChatTheme {
   id: string;
@@ -70,99 +68,6 @@ interface ChatThemesProps {
 }
 
 const ChatThemes: React.FC<ChatThemesProps> = ({ currentTheme, onThemeChange }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const theme = themes.find(t => t.id === currentTheme);
-    if (!theme) return;
-
-    // Clear existing particles
-    const existingParticles = containerRef.current.querySelectorAll('.theme-particle');
-    existingParticles.forEach(particle => particle.remove());
-
-    // Create particles based on theme
-    createParticles(theme);
-  }, [currentTheme]);
-
-  const createParticles = (theme: ChatTheme) => {
-    if (!containerRef.current) return;
-
-    const particleCount = 50;
-    const particles: HTMLElement[] = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'theme-particle absolute pointer-events-none';
-      
-      switch (theme.animation) {
-        case 'pokeball':
-          particle.innerHTML = '⚪';
-          particle.style.fontSize = '12px';
-          particle.style.color = '#ff0000';
-          break;
-        case 'matrix':
-          particle.innerHTML = String.fromCharCode(0x30A0 + Math.random() * 96);
-          particle.style.fontSize = '14px';
-          particle.style.color = '#00ff00';
-          particle.style.fontFamily = 'monospace';
-          break;
-        case 'sakura':
-          particle.innerHTML = '🌸';
-          particle.style.fontSize = '16px';
-          break;
-        case 'stars':
-          particle.innerHTML = '✨';
-          particle.style.fontSize = '12px';
-          particle.style.color = '#ffff00';
-          break;
-        case 'fire':
-          particle.innerHTML = '🔥';
-          particle.style.fontSize = '14px';
-          break;
-        case 'ocean':
-          particle.innerHTML = '💧';
-          particle.style.fontSize = '12px';
-          particle.style.color = '#00bfff';
-          break;
-        default:
-          particle.innerHTML = '•';
-          particle.style.fontSize = '8px';
-          particle.style.color = '#ffffff';
-      }
-
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.opacity = '0.7';
-      
-      containerRef.current.appendChild(particle);
-      particles.push(particle);
-    }
-
-    // Animate particles
-    anime({
-      targets: particles,
-      translateY: {
-        value: [0, -100],
-        duration: 3000,
-        easing: 'linear'
-      },
-      translateX: {
-        value: () => Math.random() * 100 - 50,
-        duration: 3000,
-        easing: 'easeInOutSine'
-      },
-      opacity: {
-        value: [0.7, 0],
-        duration: 3000,
-        easing: 'easeOutQuad'
-      },
-      loop: true,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delay: (el: any, i: number) => i * 100
-    });
-  };
 
   return (
     <div className="space-y-4">

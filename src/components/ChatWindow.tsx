@@ -96,6 +96,7 @@ const ChatWindow: React.FC = () => {
   };
 
   const getChatThemeBackground = () => {
+    console.log('Current theme:', currentTheme); // Debug log
     switch (currentTheme) {
       case 'pokeball':
         return {
