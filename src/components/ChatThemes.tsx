@@ -68,6 +68,7 @@ interface ChatThemesProps {
 }
 
 const ChatThemes: React.FC<ChatThemesProps> = ({ currentTheme, onThemeChange }) => {
+  console.log('ChatThemes - currentTheme:', currentTheme); // Debug log
 
   return (
     <div className="space-y-4">
@@ -76,7 +77,10 @@ const ChatThemes: React.FC<ChatThemesProps> = ({ currentTheme, onThemeChange }) 
         {themes.map((theme) => (
           <button
             key={theme.id}
-            onClick={() => onThemeChange(theme.id)}
+            onClick={() => {
+              console.log('Theme clicked:', theme.id); // Debug log
+              onThemeChange(theme.id);
+            }}
             className={`p-3 rounded-lg border-2 transition-all duration-200 ${
               currentTheme === theme.id
                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'

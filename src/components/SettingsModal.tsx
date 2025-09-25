@@ -49,11 +49,11 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onClearC
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div
         ref={modalRef}
-        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6 focus:outline-none max-h-[80vh] overflow-y-auto"
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full focus:outline-none max-h-[80vh] flex flex-col"
         tabIndex={-1}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             Settings
           </h2>
@@ -66,8 +66,10 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onClearC
           </button>
         </div>
 
-        {/* Settings Options */}
-        <div className="space-y-6">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-6">
+          {/* Settings Options */}
+          <div className="space-y-6">
           {/* Theme Selection */}
           <div className="space-y-3">
             <div>
@@ -210,9 +212,10 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onClearC
             </div>
           </div>
         </div>
+        </div>
 
-        {/* Footer - Sticky at bottom */}
-        <div className="sticky bottom-0 mt-8 pt-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        {/* Footer - Always visible */}
+        <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
           <button
             onClick={onClose}
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
