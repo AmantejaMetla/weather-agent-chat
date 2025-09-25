@@ -49,7 +49,7 @@ A beautiful, modern weather chatbot built with Next.js, TypeScript, and Tailwind
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/weather-agent-chat.git
+   git clone https://github.com/AmantejaMetla/weather-agent-chat.git
    cd weather-agent-chat
    ```
 
@@ -222,10 +222,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/weather-agent-chat/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/weather-agent-chat/discussions)
-- **Email**: your.email@example.com
+- **Issues**: [Raise Ticket](https://github.com/AmantejaMetla/weather-agent-chat/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/AmantejaMetla/weather-agent-chat/discussions)
+- **Email**: amantejametla@gmail.com
 
 ---
 
-Made with ❤️ by [Your Name](https://github.com/yourusername)
+Made with ❤️ by [Amanteja Metla](https://github.com/AmantejaMetla)
