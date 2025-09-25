@@ -225,43 +225,37 @@ export const useWeatherChat = (): UseWeatherChatReturn => {
           agentResponse = JSON.stringify(response.data);
         }
 
-        // Clean up the response (remove any streaming artifacts)
-        // First, try to extract only the natural language part
-        let cleanResponse = agentResponse;
-        
-        // Remove all tool call data and metadata but preserve word spacing
-        cleanResponse = cleanResponse
-          .replace(/f:\{[^}]*\}/g, ' ') // Remove f:{"messageId":"..."} patterns
-          .replace(/e:\{[^}]*\}/g, ' ') // Remove e:{"finishReason":"..."} patterns
-          .replace(/d:\{[^}]*\}/g, ' ') // Remove d:{"finishReason":"..."} patterns
-          .replace(/\d+:\{[^}]*\}/g, ' ') // Remove tool call patterns like 9:{toolCallId:...}
-          .replace(/a:\{[^}]*\}/g, ' ') // Remove a:{toolCallId:...} patterns
-          .replace(/toolCallId:[^,}]*/g, ' ') // Remove toolCallId:... patterns
-          .replace(/result:\{[^}]*\}/g, ' ') // Remove result:{...} patterns
-          .replace(/temperature:[^,}]*/g, ' ') // Remove temperature:... patterns
-          .replace(/feelsLike:[^,}]*/g, ' ') // Remove feelsLike:... patterns
-          .replace(/humidity:[^,}]*/g, ' ') // Remove humidity:... patterns
-          .replace(/windSpeed:[^,}]*/g, ' ') // Remove windSpeed:... patterns
-          .replace(/windGust:[^,}]*/g, ' ') // Remove windGust:... patterns
-          .replace(/cond[^,}]*/g, ' ') // Remove cond... patterns
-          .replace(/location:[^,}]*/g, ' ') // Remove location:... patterns
-          .replace(/[{}]/g, ' ') // Remove remaining braces
-          .replace(/,/g, ' ') // Remove commas
-          .replace(/,\s*isContinued:false\s*}/g, ' ') // Remove isContinued:false patterns
-          .replace(/isContinued\s*:\s*false/g, '') // Remove isContinued:false patterns
-          .replace(/isContinued:false/g, '') // Remove isContinued:false patterns
-          .replace(/isContinued\s*:\s*false/g, '') // Remove isContinued:false patterns
-          .replace(/isContinued:false/g, '') // Remove isContinued:false patterns
-          .replace(/isContinued\s*:\s*false/g, '') // Remove isContinued:false patterns
-          .replace(/isContinued:false/g, '') // Remove isContinued:false patterns
-          .replace(/\d+:"/g, ' ') // Remove all number:" patterns like 0:", 1:", etc.
-          .replace(/"\s*/g, ' ') // Remove all quotes and following spaces
-          .replace(/\\"/g, '"') // Unescape quotes
-          .replace(/\\n/g, '\n') // Convert newlines
-          .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-          .replace(/^\s+/, '') // Remove leading spaces
-          .replace(/\s+$/, '') // Remove trailing spaces
-          .trim();
+                    // Clean up the response (remove any streaming artifacts)
+                    let cleanResponse = agentResponse;
+
+                    // Remove all tool call data and metadata but preserve word spacing
+                    cleanResponse = cleanResponse
+                      .replace(/f:\{[^}]*\}/g, ' ') // Remove f:{"messageId":"..."} patterns
+                      .replace(/e:\{[^}]*\}/g, ' ') // Remove e:{"finishReason":"..."} patterns
+                      .replace(/d:\{[^}]*\}/g, ' ') // Remove d:{"finishReason":"..."} patterns
+                      .replace(/\d+:\{[^}]*\}/g, ' ') // Remove tool call patterns like 9:{toolCallId:...}
+                      .replace(/a:\{[^}]*\}/g, ' ') // Remove a:{toolCallId:...} patterns
+                      .replace(/toolCallId:[^,}]*/g, ' ') // Remove toolCallId:... patterns
+                      .replace(/result:\{[^}]*\}/g, ' ') // Remove result:{...} patterns
+                      .replace(/temperature:[^,}]*/g, ' ') // Remove temperature:... patterns
+                      .replace(/feelsLike:[^,}]*/g, ' ') // Remove feelsLike:... patterns
+                      .replace(/humidity:[^,}]*/g, ' ') // Remove humidity:... patterns
+                      .replace(/windSpeed:[^,}]*/g, ' ') // Remove windSpeed:... patterns
+                      .replace(/windGust:[^,}]*/g, ' ') // Remove windGust:... patterns
+                      .replace(/cond[^,}]*/g, ' ') // Remove cond... patterns
+                      .replace(/location:[^,}]*/g, ' ') // Remove location:... patterns
+                      .replace(/[{}]/g, ' ') // Remove remaining braces
+                      .replace(/,/g, ' ') // Remove commas
+                      .replace(/isContinued\s*:\s*false/g, '') // Remove isContinued:false patterns
+                      .replace(/isContinued:false/g, '') // Remove isContinued:false patterns
+                      .replace(/\d+:"/g, ' ') // Remove all number:" patterns like 0:", 1:", etc.
+                      .replace(/"\s*/g, ' ') // Remove all quotes and following spaces
+                      .replace(/\\"/g, '"') // Unescape quotes
+                      .replace(/\\n/g, '\n') // Convert newlines
+                      .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+                      .replace(/^\s+/, '') // Remove leading spaces
+                      .replace(/\s+$/, '') // Remove trailing spaces
+                      .trim();
         
         // If the response is too short or contains only technical data, try to extract meaningful text
         if (cleanResponse.length < 10 || cleanResponse.includes('toolCallId') || cleanResponse.includes('result:')) {

@@ -6,7 +6,6 @@ import { useChatTheme } from '../hooks/useChatTheme';
 
 const AnimatedBackground: React.FC = () => {
   const { currentTheme } = useChatTheme();
-  // currentTheme is used for future theme-based background changes
   const [particles, setParticles] = useState<Array<{
     left: number;
     top: number;
@@ -23,7 +22,7 @@ const AnimatedBackground: React.FC = () => {
       animationDuration: 10 + Math.random() * 20
     }));
     setParticles(generatedParticles);
-  }, []);
+  }, []); // Generate particles only once on mount
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -51,7 +50,6 @@ const AnimatedBackground: React.FC = () => {
               top: `${particle.top}%`,
               animationDelay: `${particle.animationDelay}s`,
               animationDuration: `${particle.animationDuration}s`,
-              boxShadow: '0 0 6px rgba(255, 255, 255, 0.5)'
             }}
           />
         ))}
